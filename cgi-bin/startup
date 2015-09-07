@@ -1,0 +1,8 @@
+#!/usr/bin/python
+
+import subprocess
+
+print "Content-type: text/plain; charset=iso-8859-1\n";
+
+p1 = subprocess.Popen(['sudo /usr/bin/python /usr/lib/cgi-bin/servos.py -x 0 -y 0 -mode home'], shell=True)
+p1.wait()

@@ -1,0 +1,15 @@
+#!/usr/bin/python
+
+import os
+import subprocess
+
+print "Content-type: text/plain; charset=iso-8859-1\n";
+
+
+print '<div style="padding-left:20px;">'
+print "<p>System shutting down...</p>"
+print '</div>'
+
+p1 = subprocess.Popen(['sudo /usr/bin/python /usr/lib/cgi-bin/servos.py -x 0 -y 0 -mode home'], shell=True)
+p1.wait()
+os.system("sudo /sbin/shutdown -r now")

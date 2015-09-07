@@ -1,0 +1,4 @@
+#!/bin/sh
+#openbox --config-file ~/.config/openbox/LXDE-rc.xml --startup tint2 &
+matchbox-window-manager &
+kweb -KHCUAJ+-zbhrqfpoklgtjeduwxy http://localhost
