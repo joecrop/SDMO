@@ -1,0 +1,41 @@
+#!/usr/bin/python
+import time
+import pickle
+import sqlite3
+import datetime
+import medManager
+#import userManager
+# Import modules for CGI handling 
+import cgi, cgitb 
+
+print "Content-type: text/plain; charset=iso-8859-1\n";
+
+# Create instance of FieldStorage 
+form = cgi.FieldStorage() 
+
+#recieves:
+#	user: user name
+#	med: med id
+#	mode: move, insert
+#returns: 
+#	success: 1/0
+
+# Get data from fields
+user = form.getvalue('user')
+id  = form.getvalue('med')
+mode  = form.getvalue('mode')
+
+if(mode == "move"):
+  x = medManager.getFreeSpaceX()
+  y = medManager.getFreeSpaceY()
+  #TODO: move to x,y
+  time.sleep(2)
+elif( mode == "insert"):
+  x = medManager.getFreeSpaceX()
+  y = medManager.getFreeSpaceY()
+  d = datetime.date(2016, 11, 23)
+  medManager.addInventory(x, y, id, d)
+  time.sleep(2)
+
+print '{"success":"1"}'
+

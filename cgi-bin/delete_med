@@ -1,0 +1,35 @@
+#!/usr/bin/python
+import time
+import pickle
+import sqlite3
+#import datetime
+import medManager
+#import userManager
+import scheduleManager
+# Import modules for CGI handling 
+import cgi, cgitb 
+
+print "Content-type: text/plain; charset=iso-8859-1\n";
+
+# Create instance of FieldStorage 
+form = cgi.FieldStorage() 
+
+# Get data from fields
+
+id = form.getvalue('id')
+
+found = 1
+while (found == 1):
+  found = 0
+  for med in medManager.getInventory(0):
+    if(med[2] == id):
+      found = 1
+      x = medManager.getMedX(id)
+      y = medManager.getMedY(id)
+      medManager.removeInventory(x,y)
+      #TODO: remove from actual machine...move servos
+
+medManager.deleteMed(id)
+scheduleManager.deleteSchedule(id)
+
+print '{"success":"1"}'

@@ -1,0 +1,25 @@
+#!/usr/bin/python
+#import wifitools
+import pickle
+import sqlite3
+import datetime
+import medManager
+import userManager
+
+print "Content-type: text/plain; charset=iso-8859-1\n";
+first = 1;
+print '[',
+for med in userManager.getUsers():
+  if(first == 0):
+    print ',',
+  first = 0
+  dob = datetime.datetime.strptime(med[3], '%Y-%m-%d')
+  print '{"name":"%s",' % med[0], #name
+  print '"sex":"%s",' % med[1], #sex
+  print '"weight":"%s",' % med[2], #weight
+  print '"day":"%s",' % dob.day, #dob
+  print '"month":"%s",' % dob.month, #dob
+  print '"year":"%s"' % dob.year, #dob
+  print '}',
+print ']';
+

@@ -1,0 +1,82 @@
+#!/usr/bin/python
+import time
+import pickle
+import sqlite3
+import datetime
+import medManager
+import userManager
+import scheduleManager
+# Import modules for CGI handling 
+import cgi, cgitb 
+
+class SchItem(object):
+  def __init__(self, ids, datetime, med, user, as_needed):
+    self.ids=ids
+    self.datetime=datetime
+    self.user=user
+    self.med=med
+    self.as_needed=as_needed
+
+sch_objects = []
+
+print "Content-type: text/plain; charset=iso-8859-1\n";
+print '[',
+for item in scheduleManager.getSchedules():
+  dt = datetime.datetime(*(time.strptime(item[2], "%Y-%m-%d %H:%M:%S")[0:6]))
+  if(item[4] == 0): # repeat once
+    if(dt > datetime.datetime.now()):
+      sch_objects.append(SchItem(item[0], dt, item[5], item[6], item[7]))
+  if(item[4] == 1): # repeat hours
+    while(dt < datetime.datetime.now()):
+      dt = dt + datetime.timedelta(hours=item[3])
+    for i in range(0, 10):
+      sch_objects.append(SchItem(item[0], dt, item[5], item[6], item[7]))
+      dt = dt + datetime.timedelta(hours=item[3])
+  if(item[4] == 2): # repeat days
+    while(dt < datetime.datetime.now()):
+      dt = dt + datetime.timedelta(days=item[3])
+    for i in range(0, 10):
+      sch_objects.append(SchItem(item[0], dt, item[5], item[6], item[7]))
+      dt = dt + datetime.timedelta(days=item[3])
+  if(item[4] == 3): # repeat weeks
+    while(dt < datetime.datetime.now()):
+      dt = dt + datetime.timedelta(days=7*item[3])
+    for i in range(0, 10):
+      sch_objects.append(SchItem(item[0], dt, item[5], item[6], item[7]))
+      dt = dt + datetime.timedelta(days=7*item[3])
+  if(item[4] == 4): # repeat months
+    while(dt < datetime.datetime.now()):
+      dt = dt + datetime.timedelta(months=item[3])
+    for i in range(0, 10):
+      sch_objects.append(SchItem(item[0], dt, item[5], item[6], item[7]))
+      dt = dt + datetime.timedelta(months=item[3])
+
+sch_objects_sorted = sorted(sch_objects, key=lambda item: item.datetime)
+
+first = 1;
+for item in sch_objects_sorted:
+  if(first == 0):
+    print ',',
+  first = 0
+  print '{"name":"',
+  print(item.ids), #name
+  print '", "date":"',
+  print(item.datetime.strftime('%a %b %d %Y')), #datetime
+  print '", "time":"',
+  print(item.datetime.strftime('%I:%M %p')), #datetime
+
+  print '", "med":"',
+  print(item.med), #med
+  print '", "user":"',
+  print(item.user), #user
+  print '", "as_needed":"',
+  print(item.as_needed), #user
+
+  for med in medManager.getInventory(1):
+    if(med[0] == item.med):
+      print '", "medname":"',
+      print(med[1]), #medname
+
+  print '"}',
+print ']';
+

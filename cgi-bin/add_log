@@ -1,0 +1,27 @@
+#!/usr/bin/python
+import time
+import pickle
+import sqlite3
+import datetime
+import scheduleManager
+import userManager
+import logManager
+# Import modules for CGI handling 
+import cgi, cgitb 
+
+print "Content-type: text/plain; charset=iso-8859-1\n";
+
+# Create instance of FieldStorage 
+form = cgi.FieldStorage() 
+
+# Get data from fields
+
+#name = form.getvalue('schname')
+user = form.getvalue('user')
+med_id = form.getvalue('med_id')
+consumed = form.getvalue('consumed')
+dt = datetime.datetime.now()
+
+logManager.addLog(dt, med_id, consumed, user)
+
+print '{"success":"1"}'

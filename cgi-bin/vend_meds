@@ -1,0 +1,35 @@
+#!/usr/bin/python
+import time
+import pickle
+import sqlite3
+import datetime
+import medManager
+import userManager
+# Import modules for CGI handling 
+import cgi, cgitb 
+
+print "Content-type: text/plain; charset=iso-8859-1\n";
+
+# Create instance of FieldStorage 
+form = cgi.FieldStorage() 
+
+#recieves:
+#	user: user name
+#	id: med id
+#returns: 
+#	success: t/f
+
+# Get data from fields
+user = form.getvalue('user')
+id  = form.getvalue('med')
+
+x = medManager.getMedX(id)
+y = medManager.getMedY(id)
+#print(pill_id, x,y)
+#TODO: do vending here
+time.sleep(2)
+medManager.removeInventory(x,y)
+
+
+print '{"success":"1"}'
+

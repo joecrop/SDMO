@@ -1,0 +1,68 @@
+body{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.button-wrap {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#scroll-wrapper {
+	height: 197px;
+	overflow:hidden;
+}
+
+div.hasDatepicker{ display: block; padding: 0; overflow: visible;  margin: 8px 0; max-width:340px;}
+.ui-datepicker {  overflow: visible; margin: 0;  }
+.ui-datepicker .ui-datepicker-header { position:relative; padding:.6em 0; border-bottom: 0; font-weight: bold; }
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next { padding: 1px 0 1px 2px; position:absolute; top: 0; margin-top: 0; text-indent: -9999px; }
+
+.ui-datepicker .ui-datepicker-prev { left:9px; }
+.ui-datepicker .ui-datepicker-next { right:2px; }
+.ui-datepicker .ui-datepicker-title { margin: 0 2.3em; line-height: 1.8em; text-align: center; }
+.ui-datepicker .ui-datepicker-title select { font-size:1em; margin:1px 0; }
+.ui-datepicker select.ui-datepicker-month-year {width: 100%;}
+.ui-datepicker select.ui-datepicker-month, 
+.ui-datepicker select.ui-datepicker-year { width: 49%;}
+.ui-datepicker table {width: 100%; border-collapse: collapse; margin:0; }
+.ui-datepicker td { border-width: 1px; padding:0; text-align: center; }
+.ui-datepicker td span, .ui-datepicker td a { display: block; padding: .2em 0; font-weight: bold; margin: 0; border-width: 0; text-align: center; text-decoration: none; }
+
+.ui-datepicker-calendar th { padding-top: .4em; padding-bottom: .4em; }
+.ui-datepicker-calendar th span, .ui-datepicker-calendar span.ui-state-default { opacity: .7; }
+.ui-datepicker-calendar td a { padding:4px 10px; }
+
+.ui-title {
+	padding: 0.6em 0 !important;
+}
+
+.ui-btn {
+	padding-top: 0.4em !important;
+	padding-right: 1em !important;
+}
+
+.wifi {
+	background-size: 40px 40px;
+    background-repeat: no-repeat;
+	height: 40px;
+	padding 2px;
+	width: 40px;
+}
+.wifi-0 {
+	background-image: url(../images/wifi0.png);
+}
+.wifi-1 {
+	background-image: url(../images/wifi1.png);
+}
+.wifi-2 {
+	background-image: url(../images/wifi2.png);
+}
+.wifi-3 {
+	background-image: url(../images/wifi3.png);
+}
+.contain-asneeded .ui-slider-switch { width: 130px; }

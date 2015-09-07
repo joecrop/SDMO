@@ -1,0 +1,63 @@
+#!/usr/bin/python
+import time
+import pickle
+import sqlite3
+import datetime
+import scheduleManager
+import userManager
+# Import modules for CGI handling 
+import cgi, cgitb 
+
+print "Content-type: text/plain; charset=iso-8859-1\n";
+
+# Create instance of FieldStorage 
+form = cgi.FieldStorage() 
+
+# Get data from fields
+
+#name = form.getvalue('schname')
+med = form.getvalue('schmed')
+medname = form.getvalue('schmedname')
+sid = form.getvalue('schid')
+user = form.getvalue('schuser')
+repeat = int(form.getvalue('schrepeat'))
+repeat_base = int(form.getvalue('schrepeat_base'))
+month = int(form.getvalue('schmonth'))
+day = int(form.getvalue('schday'))
+year = int(form.getvalue('schyear'))
+hour = int(form.getvalue('schhour'))
+minute = int(form.getvalue('schmin'))
+ampm = form.getvalue('schampm')
+if(form.getvalue('schrequired')):
+  as_needed = 0
+else:
+  as_needed = 1
+d = datetime.date(year, month, day)
+if(ampm): # 1=PM
+  t = datetime.time(hour+12, minute)
+else:
+  t = datetime.time(hour, minute)
+dt = datetime.datetime.combine(d,t)
+
+found = 0
+for item in scheduleManager.getSchedules():
+  if(item[0] == sid):
+    found = 1
+
+if(repeat_base == 1):
+  name = 'Hourly ' + medname + ' for ' + user
+elif(repeat_base == 2):
+  name = 'Daily ' + medname + ' for ' + user
+elif(repeat_base == 3):
+  name = 'Weekly ' + medname + ' for ' + user
+elif(repeat_base == 4):
+  name = 'Monthly ' + medname + ' for ' + user
+else:
+  name = medname + ' for ' + user
+
+if(found):
+  scheduleManager.updateSchedule(sid, name, dt, repeat, repeat_base, med, user, as_needed)
+else:
+  scheduleManager.addSchedule(name, dt, repeat, repeat_base, med, user, as_needed)
+
+print '{"success":"1"}'

@@ -1,0 +1,20 @@
+#!/usr/bin/python
+
+import wifitools
+import netifaces
+
+print "Content-type: text/plain; charset=iso-8859-1\n";
+
+ip = wifitools.get_connection_info('ip')
+mask = wifitools.get_connection_info('mask')
+brd = wifitools.get_connection_info('broadcast')
+mac = wifitools.get_connection_info('mac')
+wifipercent = 87 #int(wifitools.get_main_percent())
+
+print '<div style="padding-left:20px;">'
+print "<p>IP Address: %s</p>" % ip
+print "<p>Subnet Mask: %s</p>" % mask
+print "<p>Broadcast: %s</p>" % brd
+print "<p>MAC Address: %s</p>" % mac
+print "<p>Signal Strength: %s %%</p>" % wifipercent
+print '</div>'

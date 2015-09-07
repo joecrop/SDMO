@@ -1,0 +1,36 @@
+#!/usr/bin/python
+import time
+import pickle
+import sqlite3
+import datetime
+#import medManager
+import userManager
+# Import modules for CGI handling 
+import cgi, cgitb 
+
+print "Content-type: text/plain; charset=iso-8859-1\n";
+
+# Create instance of FieldStorage 
+form = cgi.FieldStorage() 
+
+# Get data from fields
+
+name = form.getvalue('name')
+weight = int(form.getvalue('weight'))
+month = int(form.getvalue('month'))
+day = int(form.getvalue('day'))
+year = int(form.getvalue('year'))
+sex = int(form.getvalue('sex'))
+d = datetime.date(year, month, day)
+
+found = 0
+for user in userManager.getUsers():
+  if(user.name == name):
+    found = 1
+
+if(found):
+  userManager.updateUser(name, sex, weight, d)
+else:
+  userManager.addUser(name, sex, weight, d)
+
+print '{"success":"1"}'

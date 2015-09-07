@@ -1,0 +1,30 @@
+#!/usr/bin/python
+import time
+import pickle
+import sqlite3
+#import datetime
+import medManager
+#import userManager
+# Import modules for CGI handling 
+import cgi, cgitb 
+
+print "Content-type: text/plain; charset=iso-8859-1\n";
+
+# Create instance of FieldStorage 
+form = cgi.FieldStorage() 
+
+# Get data from fields
+
+name = form.getvalue('medname')
+barcode = int(form.getvalue('medbarcode'))
+
+found = 0
+for med in medManager.getInventory(1):
+  if(med[1] == name):
+    found = 1
+
+if(found):
+  print '{"success":"0", "reason","exists"}'
+else:
+  medManager.addMed(name, 0) #name,total
+  print '{"success":"1"}'

@@ -1,0 +1,154 @@
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="css/keyboard.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link href="css/themes/jquery-ui-custom/jquery-ui.css" rel="stylesheet">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="themes/vend.css" />
+    <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="css/themes/default/jquery.mobile.structure-1.4.5.css" /> 
+    <script src="js/jquery.min.js"></script> 
+    <script src="js/jquery.mobile-1.4.5.min.js"></script>
+
+	<script src="js/iscroll-probe.js"></script>
+	<script src="js/jquery.mobile.datepicker.js"></script>
+	<script src="js/jquery.ui.datepicker.js"></script>
+	<script src="js/jquery.keyboard.min.js"></script>
+	<script src="js/main.js"></script>
+	</head>
+
+<body style="overflow:hidden">
+<div style="width:320px;height:240px;border:1px solid white;overflow:hidden;" id="main">
+
+<div style="position:fixed;x:0;y:0;z-index:100;"><div class="wifi wifi-3" /></div></div>
+
+<div data-role="header" style="overflow:hidden;">
+<h1><span id="headtitle">Good Morning</span></h1>
+<a href="#" data-icon="home" class="ui-btn-right" onclick="loadPage('home');">Home</a>
+</div><!-- /header -->
+
+<div class="ui-grid-b" id="grid">
+</div>
+<div id="scroll-wrapper">
+	<ul data-role="listview" data-count-theme="b" data-inset="true" id="list"><li></li></ul>
+</div>
+
+<form id="form_schedule" style="display:none;">
+	<div style="width:320px;height:40px;">
+		<div style="width:94px;float:left;padding-top:8px;padding-left:2px;">
+			<label>Start Day:</label>
+		</div>
+		<div style="width:60px;float:left;">
+			<input type="text" name="schmonth" id="form_schmonth" placeholder="Month" value="" data-mini="true">
+		</div>
+		<div style="width:10px;float:left;padding-top:8px;padding-left:2px;">
+			<label>/</label>
+		</div>
+		<div style="width:50px;float:left;">
+			<input type="text" name="schday" id="form_schday" placeholder="Day" value="" data-mini="true">
+		</div>
+		<div style="width:10px;float:left;padding-top:8px;padding-left:2px;">
+			<label>/</label>
+		</div>
+		<div style="width:80px;float:left;">
+			<input type="text" name="schyear" id="form_schyear" placeholder="Year" value="" data-mini="true">
+		</div>
+	</div>
+
+	<div style="width:320px;height:40px;">
+		<div style="width:94px;float:left;padding-top:8px;padding-left:2px;">
+			<label>Start Time:</label>
+		</div>
+		<div style="width:50px;float:left;">
+			<input type="text" name="schhour" id="form_schhour" placeholder="Hour" value="" data-mini="true">
+		</div>
+		<div style="width:10px;float:left;padding-top:8px;padding-left:2px;">
+			<label>:</label>
+		</div>
+		<div style="width:50px;float:left;">
+			<input type="text" name="schmin" id="form_schmin" placeholder="Min" value="" data-mini="true">
+		</div>
+		<div style="width:90px;float:left;"><select name="schampm" id="form_schampm" data-mini="true"><option value="0">AM</option><option value="1">PM</option></select></div>
+	</div>
+
+	<div style="width:320px;height:40px;"><label style="width:102px;height:20px;padding:8px 2px;float:left;">Repeat Every:</label><div style="width:90px;float:left;"><input type="text" name="schrepeat" id="form_schrepeat" placeholder="How Many" value="" data-mini="true"></div><div style="width:102px;float:left;"><select name="schrepeat_base" id="form_schrepeat_base" data-mini="true"><option value="0">Once</option><option value="1">Hours</option><option value="2" selected="selected">Days</option><option value="3">Weeks</option><option value="4">Months</option></select></div>
+		<input type="hidden" name="schuser" id="form_schuser" value="">
+		<input type="hidden" name="schmed" id="form_schmed" value="">
+		<input type="hidden" name="schmedname" id="form_schmedname" value="">
+		<input type="hidden" name="schid" id="form_schid" value="">
+	</div>
+
+	<div style="float:right;margin-top:9px;margin-left:10px;">
+		<button class="ui-shadow ui-btn ui-btn-inline ui-corner-all" style="margin-top:-8;" type="submit" id="form_medsubmit" data-mini="true" onClick="submitScheduleForm()">Add</button>
+	</div>
+	<div style="float:right;">
+		<div class="contain-asneeded">
+			<select name="schrequired" id="form_schrequired" data-role="slider">
+   				<option value="1">Required</option>
+   				<option value="0">As Needed</option>
+			</select>
+		</div>
+	</div>
+</form>
+
+
+<form id="form_newmed" style="display:none;">
+	<div class="ui-field-contain">
+		<label for:"form_medname">Name:</label>
+		<input type="text" name="medname" id="form_medname" placeholder="Medicine Name" value="" data-mini="true">
+	</div>
+	<div class="ui-field-contain">
+		<label for:"form_barcode">Barcode:</label>
+		<input type="text" name="medbarcode" id="form_medbarcode" placeholder="Barcode" value="" data-mini="true">
+	</div>
+	<br>
+	<br>
+	<div style="float:right;">
+		<button class="ui-shadow ui-btn ui-btn-inline ui-corner-all" style="margin-top:-8;" type="submit" id="form_medsubmit" data-mini="true" onClick="submitNewMedForm()">Add</button>
+	</div>
+</form>
+
+<form id="form_user" style="display:none;">
+	<div class="ui-field-contain">
+		<label for:"form_name">Name:</label>
+		<input type="text" name="name" id="form_name" placeholder="Name" value="" data-mini="true">
+	</div>
+	<div class="ui-field-contain">
+		<label for:"form_weight">Weight:</label>
+		<input type="text" name="weight" id="form_weight" placeholder="Weight (pounds)" value="" data-mini="true">
+	</div>
+	<label style="width:61px;height:20px;padding:8px 2px;float:left;">Birthday:</label>
+	<div style="width:60px;float:left;">
+		<input type="text" name="month" id="form_month" placeholder="Month" value="" data-mini="true">
+	</div>
+	<div style="width:10px;float:left;">
+		<label style="width:65px;height:20px;padding:8px 3px;">/</label>
+	</div>
+	<div style="width:50px;float:left;">
+		<input type="text" name="day" id="form_day" placeholder="Day" value="" data-mini="true">
+	</div>
+	<div style="width:10px;float:left;">
+		<label style="width:65px;height:20px;padding:8px 3px;">/</label>
+	</div>
+	<div style="width:80px;float:left;">
+		<input type="text" name="year" id="form_year" placeholder="Year" value="" data-mini="true">
+	</div>
+
+	<div class="ui-field-contain">
+		<label style="">Sex:</label>
+		<div style="width:95px;float:left;">
+			<select name="sex" id="form_sex" data-role="slider">
+   				<option value="0">Female</option>
+   				<option value="1">Male</option>
+			</select>
+		</div>
+	</div>
+	<div style="float:right;">
+		<button class="ui-shadow ui-btn ui-btn-inline ui-corner-all" style="margin-top:-8;" type="submit" id="form_submit" data-mini="true" onClick="submitUserForm()">Submit</button>
+	</div>
+</form>
+
+</div>
+</body>
